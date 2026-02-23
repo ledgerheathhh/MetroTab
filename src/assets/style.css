@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #app {
+    @apply min-h-screen;
+  }
+
+  body {
+    @apply m-0 font-sans text-slate-100 antialiased;
+  }
+}
+
+@layer components {
+  .acrylic-bg {
+    @apply border border-white/25 bg-white/10 shadow-xl backdrop-blur-md;
+  }
+
+  .metro-btn {
+    @apply rounded-xl border border-white/30 bg-white/15 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/25;
+  }
+
+  .metro-btn-primary {
+    @apply rounded-xl bg-windows px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-600;
+  }
+
+  .metro-input {
+    @apply w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-sky-400 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100;
+  }
+
+  .metro-action {
+    @apply rounded-lg border border-white/20 bg-white/10 px-2 py-1 text-xs text-white transition hover:bg-white/25;
+  }
+
+  .metro-action.danger {
+    @apply bg-rose-600/85 hover:bg-rose-600;
+  }
+
+  .tile-body {
+    @apply flex h-full w-full flex-col p-4 text-left;
+  }
+
+  .tile-icon {
+    @apply inline-grid size-9 place-items-center rounded-lg bg-white/20 text-sm font-semibold tracking-wider text-white;
+  }
+
+  .tile-copy h3 {
+    @apply mt-3 text-base font-semibold text-white;
+  }
+
+  .tile-copy p {
+    @apply mt-1 line-clamp-2 text-xs text-white/85;
+  }
+}
