@@ -44,6 +44,12 @@ function handleAddShortcut() {
     description
   })
 }
+
+function handleLayoutChange(patches: Array<{ id: string; x: number; y: number; w: number; h: number }>) {
+  for (const patch of patches) {
+    boardStore.updateTileLayout(patch.id, patch)
+  }
+}
 </script>
 
 <template>
@@ -66,6 +72,7 @@ function handleAddShortcut() {
       @resize="boardStore.cycleTileSize"
       @shift="(id, dx, dy) => boardStore.moveTile(id, dx, dy)"
       @toggle-todo="(tileId, todoId) => boardStore.toggleTodoDone(tileId, todoId)"
+      @layout-change="handleLayoutChange"
     />
 
     <SettingsDrawer :open="showSettings" @close="showSettings = false" />

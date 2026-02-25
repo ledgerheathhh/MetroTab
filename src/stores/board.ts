@@ -107,6 +107,14 @@ function cloneTiles(tiles: TileItem[]): TileItem[] {
   return JSON.parse(JSON.stringify(tiles)) as TileItem[]
 }
 
+function resolveSizeFromSpan(w: number, h: number, fallback: TileSize): TileSize {
+  if (w === 1 && h === 1) return '1x1'
+  if (w === 2 && h === 2) return '2x2'
+  if (w === 4 && h === 2) return '4x2'
+  if (w === 4 && h === 4) return '4x4'
+  return fallback
+}
+
 export const useBoardStore = defineStore('board', () => {
   const tiles = useLocalStorage<TileItem[]>('metrotab.tiles', cloneTiles(DEFAULT_TILES), {
     mergeDefaults: true
@@ -161,6 +169,8 @@ export const useBoardStore = defineStore('board', () => {
     if (!target) return
 
     Object.assign(target, patch)
+
+    target.size = resolveSizeFromSpan(target.w, target.h, target.size)
   }
 
   function moveTile(id: string, dx: number, dy: number) {

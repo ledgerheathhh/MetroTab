@@ -33,6 +33,7 @@ function accentColor(): string {
       v-if="props.editing"
       class="absolute right-2 top-2 z-20 flex gap-1 rounded-xl border border-white/20 bg-slate-900/60 p-1"
     >
+      <span class="tile-drag-handle metro-action select-none" title="Drag tile">Drag</span>
       <button class="metro-action" type="button" @click="emit('shift', props.tile.id, -1, 0)">←</button>
       <button class="metro-action" type="button" @click="emit('shift', props.tile.id, 1, 0)">→</button>
       <button class="metro-action" type="button" @click="emit('shift', props.tile.id, 0, -1)">↑</button>
@@ -42,3 +43,13 @@ function accentColor(): string {
     </div>
   </article>
 </template>
+
+<style scoped>
+.tile-drag-handle {
+  cursor: grab;
+}
+
+.tile-drag-handle:active {
+  cursor: grabbing;
+}
+</style>
