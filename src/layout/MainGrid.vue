@@ -5,6 +5,7 @@ import ShortcutTile from '@/components/tiles/ShortcutTile.vue'
 import ClockTile from '@/components/tiles/ClockTile.vue'
 import TodoTile from '@/components/tiles/TodoTile.vue'
 import type { TileItem } from '@/types/tile'
+import { getSizeConstraint } from '@/utils/tiles'
 
 interface LayoutPatch {
   id: string
@@ -44,6 +45,10 @@ function resolveComponent(tile: TileItem) {
   return componentMap[tile.type as keyof typeof componentMap] || ShortcutTile
 }
 
+function getTileConstraint(tile: TileItem) {
+  return getSizeConstraint(tile.type)
+}
+
 function getItemElement(id: string): GridItemHTMLElement | null {
   if (!gridRef.value) return null
 
@@ -63,6 +68,8 @@ function syncGridFromProps() {
     const el = getItemElement(tile.id)
     if (!el) continue
 
+    const constraint = getTileConstraint(tile)
+
     if (!existingIds.has(tile.id)) {
       grid.makeWidget(el)
     }
@@ -72,7 +79,11 @@ function syncGridFromProps() {
       y: tile.y,
       w: tile.w,
       h: tile.h,
-      id: tile.id
+      id: tile.id,
+      minW: constraint.minW,
+      minH: constraint.minH,
+      maxW: constraint.maxW,
+      maxH: constraint.maxH
     })
   }
 
@@ -194,6 +205,10 @@ watch(
         :gs-y="tile.y"
         :gs-w="tile.w"
         :gs-h="tile.h"
+        :gs-min-w="getTileConstraint(tile).minW"
+        :gs-min-h="getTileConstraint(tile).minH"
+        :gs-max-w="getTileConstraint(tile).maxW"
+        :gs-max-h="getTileConstraint(tile).maxH"
       >
         <div class="grid-stack-item-content">
           <component
